@@ -1,0 +1,399 @@
+if not game:IsLoaded() then
+    game.Loaded:Wait()
+end
+
+local Players = game:GetService("Players")
+local UIS = game:GetService("UserInputService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui", 10)
+if not playerGui then return end
+
+if playerGui:FindFirstChild("AURA_CONTROL_GUI") then
+    playerGui.AURA_CONTROL_GUI:Destroy()
+end
+
+-- ======================== GLOVE HITS ========================
+gloveHits = {
+    Default = ReplicatedStorage.b,
+    Extended = ReplicatedStorage.b,
+    ["T H I C K"] = ReplicatedStorage.GeneralHit,
+    Squid = ReplicatedStorage.GeneralHit,
+    Gummy = ReplicatedStorage.GeneralHit,
+    RNG = ReplicatedStorage.GeneralHit,
+    Tycoon = ReplicatedStorage.GeneralHit,
+    Charge = ReplicatedStorage.GeneralHit,
+    Baller = ReplicatedStorage.GeneralHit,
+    Tableflip = ReplicatedStorage.GeneralHit,
+    Booster = ReplicatedStorage.GeneralHit,
+    Shield = ReplicatedStorage.GeneralHit,
+    Track = ReplicatedStorage.GeneralHit,
+    Goofy = ReplicatedStorage.GeneralHit,
+    Confusion = ReplicatedStorage.GeneralHit,
+    Elude = ReplicatedStorage.GeneralHit,
+    Glitch = ReplicatedStorage.GeneralHit,
+    Snowball = ReplicatedStorage.GeneralHit,
+    fish = ReplicatedStorage.GeneralHit,
+    Killerfish = ReplicatedStorage.GeneralHit,
+    ["🗿"] = ReplicatedStorage.GeneralHit,
+    Obby = ReplicatedStorage.GeneralHit,
+    Voodoo = ReplicatedStorage.GeneralHit,
+    Leash = ReplicatedStorage.GeneralHit,
+    Flamarang = ReplicatedStorage.GeneralHit,
+    Berserk = ReplicatedStorage.GeneralHit,
+    Quake = ReplicatedStorage.GeneralHit,
+    Rattlebones = ReplicatedStorage.GeneralHit,
+    Chain = ReplicatedStorage.GeneralHit,
+    ["Ping Pong"] = ReplicatedStorage.GeneralHit,
+    Whirlwind = ReplicatedStorage.GeneralHit,
+    Slicer = ReplicatedStorage.GeneralHit,
+    Counter = ReplicatedStorage.GeneralHit,
+    Hammer = ReplicatedStorage.GeneralHit,
+    Excavator = ReplicatedStorage.GeneralHit,
+    ["Home Run"] = ReplicatedStorage.GeneralHit,
+    Psycho = ReplicatedStorage.GeneralHit,
+    Kraken = ReplicatedStorage.GeneralHit,
+    Gravity = ReplicatedStorage.GeneralHit,
+    Lure = ReplicatedStorage.GeneralHit,
+    Jebaited = ReplicatedStorage.GeneralHit,
+    Meteor = ReplicatedStorage.GeneralHit,
+    Tinkerer = ReplicatedStorage.GeneralHit,
+    ["Guardian Angel"] = ReplicatedStorage.GeneralHit,
+    Sun = ReplicatedStorage.GeneralHit,
+    Necromancer = ReplicatedStorage.GeneralHit,
+    Zombie = ReplicatedStorage.GeneralHit,
+    Dual = ReplicatedStorage.GeneralHit,
+    Alchemist = ReplicatedStorage.GeneralHit,
+    Parry = ReplicatedStorage.GeneralHit,
+    Druid = ReplicatedStorage.GeneralHit,
+    Oven = ReplicatedStorage.GeneralHit,
+    Jester = ReplicatedStorage.GeneralHit,
+    Ferryman = ReplicatedStorage.GeneralHit,
+    Scythe = ReplicatedStorage.GeneralHit,
+    Blackhole = ReplicatedStorage.GeneralHit,
+    Santa = ReplicatedStorage.GeneralHit,
+    Grapple = ReplicatedStorage.GeneralHit,
+    Iceskate = ReplicatedStorage.GeneralHit,
+    Pan = ReplicatedStorage.GeneralHit,
+    Blasphemy = ReplicatedStorage.GeneralHit,
+    Blink = ReplicatedStorage.GeneralHit,
+    ["Ultra Instinct"] = ReplicatedStorage.GeneralHit,
+    Admin = ReplicatedStorage.GeneralHit,
+    Prop = ReplicatedStorage.GeneralHit,
+    Joust = ReplicatedStorage.GeneralHit,
+    Slapstick = ReplicatedStorage.GeneralHit,
+    Firework = ReplicatedStorage.GeneralHit,
+    Run = ReplicatedStorage.GeneralHit,
+    Beatdown = ReplicatedStorage.GeneralHit,
+    ["L.O.L.B.O.M.B"] = ReplicatedStorage.GeneralHit,
+    Glovel = ReplicatedStorage.GeneralHit,
+    Chicken = ReplicatedStorage.GeneralHit,
+    Divebomb = ReplicatedStorage.GeneralHit,
+    Lamp = ReplicatedStorage.GeneralHit,
+    Pocket = ReplicatedStorage.GeneralHit,
+    BONK = ReplicatedStorage.GeneralHit,
+    Knockoff = ReplicatedStorage.GeneralHit,
+    Divert = ReplicatedStorage.GeneralHit,
+    Frostbite = ReplicatedStorage.GeneralHit,
+    Sbeve = ReplicatedStorage.GeneralHit,
+    Plank = ReplicatedStorage.GeneralHit,
+    Golem = ReplicatedStorage.GeneralHit,
+    Spoonful = ReplicatedStorage.GeneralHit,
+    Grab = ReplicatedStorage.GeneralHit,
+    ["the schlop"] = ReplicatedStorage.GeneralHit,
+    UFO = ReplicatedStorage.GeneralHit,
+    ["el gato"] = ReplicatedStorage.GeneralHit,
+    Siphon = ReplicatedStorage.GeneralHit,
+    Hive = ReplicatedStorage.GeneralHit,
+    Wrench = ReplicatedStorage.GeneralHit,
+    Hunter = ReplicatedStorage.GeneralHit,
+    Relude = ReplicatedStorage.GeneralHit,
+    Avatar = ReplicatedStorage.GeneralHit,
+    Demolition = ReplicatedStorage.GeneralHit,
+    Shotgun = ReplicatedStorage.GeneralHit,
+    Beachball = ReplicatedStorage.GeneralHit,
+    ZZZZZZZ = ReplicatedStorage.ZZZZZZZHit,
+    Brick = ReplicatedStorage.BrickHit,
+    Snow = ReplicatedStorage.SnowHit,
+    Pull = ReplicatedStorage.PullHit,
+    Flash = ReplicatedStorage.FlashHit,
+    Spring = ReplicatedStorage.springhit,
+    Swapper = ReplicatedStorage.HitSwapper,
+    Bull = ReplicatedStorage.BullHit,
+    Dice = ReplicatedStorage.DiceHit,
+    Ghost = ReplicatedStorage.GhostHit,
+    Thanos = ReplicatedStorage.ThanosHit,
+    Stun = ReplicatedStorage.HtStun,
+    ["Za Hando"] = ReplicatedStorage.zhramt,
+    Fort = ReplicatedStorage.Fort,
+    Magnet = ReplicatedStorage.MagnetHIT,
+    Pusher = ReplicatedStorage.PusherHit,
+    Anchor = ReplicatedStorage.hitAnchor,
+    Space = ReplicatedStorage.HtSpace,
+    Boomerang = ReplicatedStorage.BoomerangH,
+    Speedrun = ReplicatedStorage.Speedrunhit,
+    Mail = ReplicatedStorage.MailHit,
+    Golden = ReplicatedStorage.GoldenHit,
+    MR = ReplicatedStorage.MisterHit,
+    Reaper = ReplicatedStorage.ReaperHit,
+    Replica = ReplicatedStorage.ReplicaHit,
+    Defense = ReplicatedStorage.DefenseHit,
+    Killstreak = ReplicatedStorage.KSHit,
+    Reverse = ReplicatedStorage.ReverseHit,
+    Shukuchi = ReplicatedStorage.ShukuchiHit,
+    Duelist = ReplicatedStorage.DuelistHit,
+    woah = ReplicatedStorage.woahHit,
+    Ice = ReplicatedStorage.IceHit,
+    Adios = ReplicatedStorage.hitAdios,
+    Blocked = ReplicatedStorage.BlockedHit,
+    Engineer = ReplicatedStorage.engiehit,
+    Rocky = ReplicatedStorage.RockyHit,
+    Conveyor = ReplicatedStorage.ConvHit,
+    STOP = ReplicatedStorage.STOP,
+    Phantom = ReplicatedStorage.PhantomHit,
+    Wormhole = ReplicatedStorage.WormHit,
+    Acrobat = ReplicatedStorage.AcHit,
+    Plague = ReplicatedStorage.PlagueHit,
+    ["[REDACTED]"] = ReplicatedStorage.ReHit,
+    bus = ReplicatedStorage.hitbus,
+    Phase = ReplicatedStorage.PhaseH,
+    Warp = ReplicatedStorage.WarpHt,
+    Bomb = ReplicatedStorage.BombHit,
+    Bubble = ReplicatedStorage.BubbleHit,
+    Jet = ReplicatedStorage.JetHit,
+    Shard = ReplicatedStorage.ShardHIT,
+    potato = ReplicatedStorage.potatohit,
+    CULT = ReplicatedStorage.CULTHit,
+    bob = ReplicatedStorage.bobhit,
+    Buddies = ReplicatedStorage.buddiesHIT,
+    Spy = ReplicatedStorage.SpyHit,
+    Detonator = ReplicatedStorage.DetonatorHit,
+    Rage = ReplicatedStorage.GRRRR,
+    Trap = ReplicatedStorage.traphi,
+    Orbit = ReplicatedStorage.Orbihit,
+    Hybrid = ReplicatedStorage.HybridCLAP,
+    Slapple = ReplicatedStorage.SlappleHit,
+    Disarm = ReplicatedStorage.DisarmH,
+    Dominance = ReplicatedStorage.DominanceHit,
+    Link = ReplicatedStorage.LinkHit,
+    Rojo = ReplicatedStorage.RojoHit,
+    rob = ReplicatedStorage.robhit,
+    Rhythm = ReplicatedStorage.rhythmhit,
+    Nightmare = ReplicatedStorage.nightmarehit,
+    Hitman = ReplicatedStorage.HitmanHit,
+    Thor = ReplicatedStorage.ThorHit,
+    Retro = ReplicatedStorage.RetroHit,
+    Cloud = ReplicatedStorage.CloudHit,
+    Null = ReplicatedStorage.NullHit,
+    spin = ReplicatedStorage.spinhit,
+    Kinetic = ReplicatedStorage.HtStun,
+    Recall = ReplicatedStorage.HtStun,
+    Balloony = ReplicatedStorage.HtStun,
+    Sparky = ReplicatedStorage.HtStun,
+    Boogie = ReplicatedStorage.HtStun,
+    Coil = ReplicatedStorage.HtStun,
+    Diamond = ReplicatedStorage.DiamondHit,
+    Megarock = ReplicatedStorage.DiamondHit,
+    Moon = ReplicatedStorage.CelestialHit,
+    Jupiter = ReplicatedStorage.CelestialHit,
+    Mitten = ReplicatedStorage.MittenHit,
+    ["Hallow Jack"] = ReplicatedStorage.HallowHIT,
+    OVERKILL = ReplicatedStorage.Overkillhit,
+    ["The Flex"] = ReplicatedStorage.FlexHit,
+    Custom = ReplicatedStorage.CustomHit,
+    ["God's Hand"] = ReplicatedStorage.Godshand,
+    Error = ReplicatedStorage.Errorhit
+}
+
+local maxDistance = 30
+
+local gui = Instance.new("ScreenGui")
+gui.Name = "AURA_CONTROL_GUI"
+gui.IgnoreGuiInset = true
+gui.ResetOnSpawn = false
+gui.Parent = playerGui
+
+local auraBtn = Instance.new("ImageButton")
+auraBtn.Parent = gui
+auraBtn.Size = UDim2.new(0, 80, 0, 80)
+auraBtn.Position = UDim2.new(0.5, -40, 0.7, 0)
+auraBtn.BackgroundColor3 = Color3.fromRGB(60,60,70)
+auraBtn.BackgroundTransparency = 0
+auraBtn.Image = "rbxassetid://0"
+Instance.new("UICorner", auraBtn).CornerRadius = UDim.new(1, 40)
+
+local stroke = Instance.new("UIStroke", auraBtn)
+stroke.Color = Color3.fromRGB(255,255,255)
+stroke.Thickness = 2
+stroke.Transparency = 0.5
+
+local btnLabel = Instance.new("TextLabel")
+btnLabel.Parent = auraBtn
+btnLabel.Size = UDim2.new(1,0,1,0)
+btnLabel.BackgroundTransparency = 1
+btnLabel.Text = "⚡"
+btnLabel.TextColor3 = Color3.fromRGB(255,255,255)
+btnLabel.Font = Enum.Font.GothamBold
+btnLabel.TextSize = 40
+
+local isHolding = false
+
+-- Hàm lấy remote cho glove hiện tại
+local function getGloveHitRemote()
+    local glove = player.leaderstats and player.leaderstats:FindFirstChild("Glove")
+    if not glove then return nil end
+    
+    local gloveName = glove.Value
+    local remote = gloveHits[gloveName]
+    
+    if remote then return remote end
+    
+    -- Nếu không tìm thấy trong gloveHits, thử tìm trực tiếp
+    local possibleNames = {
+        gloveName .. "Hit",
+        gloveName .. "Ability",
+        gloveName .. "Slap",
+        "GeneralHit",
+        "SlapHit"
+    }
+    for _, name in ipairs(possibleNames) do
+        local r = ReplicatedStorage:FindFirstChild(name)
+        if r then
+            gloveHits[gloveName] = r
+            return r
+        end
+    end
+    
+    return nil
+end
+
+-- Bấm xuống = bật aura
+auraBtn.MouseButton1Down:Connect(function()
+    isHolding = true
+    getgenv().auraEnabled = true
+    auraBtn.BackgroundColor3 = Color3.fromRGB(0,200,80)
+    stroke.Color = Color3.fromRGB(0,255,100)
+    stroke.Transparency = 0
+end)
+
+-- Thả ra = tắt aura
+auraBtn.MouseButton1Up:Connect(function()
+    isHolding = false
+    getgenv().auraEnabled = false
+    auraBtn.BackgroundColor3 = Color3.fromRGB(60,60,70)
+    stroke.Color = Color3.fromRGB(255,255,255)
+    stroke.Transparency = 0.5
+end)
+
+-- Nếu vuốt ra ngoài khi đang giữ cũng tắt
+auraBtn.MouseLeave:Connect(function()
+    if isHolding then
+        isHolding = false
+        getgenv().auraEnabled = false
+        auraBtn.BackgroundColor3 = Color3.fromRGB(60,60,70)
+        stroke.Color = Color3.fromRGB(255,255,255)
+        stroke.Transparency = 0.5
+    end
+end)
+
+-- ===== KÉO THẢ FIX (giữ được nút) =====
+local dragging = false
+local dragStart = nil
+local startPos = nil
+local dragTouch = nil
+local moved = false
+
+auraBtn.Active = true
+
+auraBtn.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.Touch 
+    or input.UserInputType == Enum.UserInputType.MouseButton1 then
+        
+        dragTouch = input
+        dragStart = input.Position
+        startPos = auraBtn.Position
+        moved = false
+        
+        task.delay(0.15, function()
+            if dragTouch == input then
+                dragging = true
+            end
+        end)
+    end
+end)
+
+UIS.InputChanged:Connect(function(input)
+    if dragging and input == dragTouch then
+        local delta = input.Position - dragStart
+        
+        if math.abs(delta.X) > 5 or math.abs(delta.Y) > 5 then
+            moved = true
+        end
+        
+        auraBtn.Position = UDim2.new(
+            startPos.X.Scale,
+            startPos.X.Offset + delta.X,
+            startPos.Y.Scale,
+            startPos.Y.Offset + delta.Y
+        )
+    end
+end)
+
+UIS.InputEnded:Connect(function(input)
+    if input == dragTouch then
+        dragging = false
+        dragTouch = nil
+    end
+end)
+
+-- ===== MAIN AURA LOOP =====
+RunService.Heartbeat:Connect(function()
+    if not getgenv().auraEnabled then return end
+    
+    pcall(function()
+        local remote = getGloveHitRemote()
+        if not remote then return end
+        
+        local char = player.Character
+        if not char then return end
+        
+        local rootPart = char:FindFirstChild('HumanoidRootPart') or char:FindFirstChildWhichIsA('BasePart')
+        if not rootPart then return end
+        
+        -- Kiểm tra xem có trong arena không
+        if not char:FindFirstChild("entered") then return end
+        
+        for _, plr in pairs(Players:GetPlayers()) do
+            if plr ~= player then
+                local targetChar = plr.Character
+                if targetChar then
+                    -- Kiểm tra các điều kiện
+                    if not targetChar:FindFirstChild("entered") then continue end
+                    if targetChar:FindFirstChild("rock") then continue end
+                    if targetChar:FindFirstChild("Head") and targetChar.Head:FindFirstChild("UnoReverseCard") then continue end
+                    
+                    local targetPart = targetChar:FindFirstChild('HumanoidRootPart') or targetChar:FindFirstChildWhichIsA('BasePart')
+                    if targetPart then
+                        local distance = (rootPart.Position - targetPart.Position).Magnitude
+                        if distance <= maxDistance then
+                            -- Thử slapping với các phần cơ thể
+                            local parts = {"Head", "Torso", "HumanoidRootPart"}
+                            for _, partName in ipairs(parts) do
+                                local part = targetChar:FindFirstChild(partName)
+                                if part then
+                                    remote:FireServer(part)
+                                    break
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end)
+end)
+
+print("✅ Slap Aura Loaded! Giữ nút để bật aura, thả ra để tắt. Range:", maxDistance)
+print("✅ Glove Hit đã được tích hợp!")
